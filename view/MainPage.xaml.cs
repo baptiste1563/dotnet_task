@@ -1,25 +1,35 @@
-﻿namespace dotnet_tack
+﻿using dotnet_tack.Data;
+using dotnet_tack.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+
+namespace dotnet_tack
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
+        public AppDbContext _dbContext;
 
-        public MainPage()
+
+
+        public MainPage(AppDbContext dbContext)
         {
             InitializeComponent();
+            _dbContext = dbContext;
+            
         }
 
-        private void OnCounterClicked(object sender, EventArgs e)
+        private async void OnAddTaskClicked(object sender, EventArgs e)
         {
-            count++;
+            var newTask = new dotnet_tack.Models.Task
+            {
+                Title = "Learn MySQL with EF Core",
+                Status = Avancement.EnCours,
+            };
 
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
+            _dbContext.Tasks.Add(newTask);
+            await _dbContext.SaveChangesAsync();
+            await DisplayAlert("Success", "Task added to MySQL database!", "OK");
         }
-    }
 
+    }
 }

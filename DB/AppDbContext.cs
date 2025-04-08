@@ -12,7 +12,7 @@ namespace dotnet_tack.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // Remplacez par votre chaîne de connexion MySQL
-            var connectionString = "server=localhost;database=dotnet_tack;user=root;password=yourpassword";
+            var connectionString = "server=localhost;database=dotnet_tack;user=root;password=";
             optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
            
         }
